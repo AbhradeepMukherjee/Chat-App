@@ -19,26 +19,32 @@ Database: Mongo DB
 Clone the project
 ```bash
 https://github.com/AbhradeepMukherjee/chattingWebApp.git
+```
 
 Go to the project directory
 ```bash
 cd chattingWebApp
+```
 
 Install dependencies
 ```bash
 npm install
+```
 ```bash
 cd backend/
 npm install
+```
 
 Start the server
 ```bash
 npm run dev
+```
 
 Start the Client
 ```bash
 cd ../frontend
 npm start
+```
 
 
 
