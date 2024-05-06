@@ -4,7 +4,9 @@ ChattingWebApp is a Full Stack Chatting App. Uses Socket.io for real time commun
 ## Tech Stack:
 
 Client: React JS
+
 Server: Node JS, Express JS
+
 Database: Mongo DB
 
 ## Features: 
