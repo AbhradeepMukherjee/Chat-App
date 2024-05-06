@@ -10,8 +10,11 @@ Database: Mongo DB
 ## Features: 
 
 1.User Authentication using Node JS and Express JS
+
 2.Real Time Chatting using Socket.io
+
 3.One-to-one and Group chatting using Socket.io
+
 4.Notifications using Socket.io
 
 ## Run Locally:
