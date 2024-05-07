@@ -2,12 +2,13 @@ import React from "react";
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
     const toast = useToast();
-  
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [confirmpassword, setConfirmpassword] = useState("");
@@ -37,7 +38,7 @@ const Signup = () => {
           });
           return;
         }
-        console.log(name, email, password, image);
+        
         try {
           const config = {
             headers: {
@@ -45,7 +46,7 @@ const Signup = () => {
             },
           };
           const { data } = await axios.post(
-            "/api/user",
+            "http://localhost:5000/api/user",
             {
               name,
               email,
@@ -54,7 +55,7 @@ const Signup = () => {
             },
             config
           );
-          console.log(data);
+
           toast({
             title: "Registration Successful",
             status: "success",
@@ -64,7 +65,7 @@ const Signup = () => {
           });
           localStorage.setItem("userInfo", JSON.stringify(data));
           setimageLoading(false);
-        //   history.push("/chats");
+          navigate("/chats")
         } catch (error) {
           toast({
             title: "Error Occured!",
@@ -90,7 +91,7 @@ const Signup = () => {
           });
           return;
         }
-        console.log(image);
+        
         if (image.type === "image/jpeg" || image.type === "image/png") {
           const data = new FormData();
           data.append("file", image);
@@ -103,7 +104,7 @@ const Signup = () => {
             .then((res) => res.json())
             .then((data) => {
               setimage(data.url.toString());
-              console.log(data.url.toString());
+              
               setimageLoading(false);
             })
             .catch((err) => {

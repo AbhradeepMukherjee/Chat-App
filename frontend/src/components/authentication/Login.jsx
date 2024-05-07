@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack, useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { ChatState } from "../../context/ChatProvider";
 
 const Login = () => {
     const [show, setShow] = useState(false);
@@ -11,6 +13,8 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const {setUser} = ChatState();
 
     const submitHandler = async () => {
         setLoading(true);
@@ -31,8 +35,9 @@ const Login = () => {
                 "Content-type": "application/json",
               },
             };
+            
             const { data } = await axios.post(
-                "/api/user/login",
+                "http://localhost:5000/api/user/login",
                 { email, password },
                 config
             );
@@ -43,10 +48,10 @@ const Login = () => {
                 isClosable: true,
                 position: "bottom",
               });
-            //   setUser(data);
+              setUser(data);
               localStorage.setItem("userInfo", JSON.stringify(data));
               setLoading(false);
-            //   history.push("/chats");
+              navigate("/chats");
             } catch (error) {
               toast({
                 title: "Error Occured!",

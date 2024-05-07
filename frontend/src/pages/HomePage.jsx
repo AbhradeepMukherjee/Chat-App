@@ -8,17 +8,19 @@ import {
     Tabs,
     Text,
   } from "@chakra-ui/react";
-  import { useEffect } from "react";
-  import Login from "../components/authentication/Login";
-  import Signup from "../components/authentication/Signup";
+import { useEffect } from "react";
+import Login from "../components/authentication/Login";
+import Signup from "../components/authentication/Signup"
+import { useNavigate } from "react-router-dom";
   
   function Homepage() {
-  
+    const navigate = useNavigate(); 
+    
     useEffect(() => {
       const user = JSON.parse(localStorage.getItem("userInfo"));
   
-      if (user) history.push("/chats");
-    }, [history]);
+      if (user) navigate("/chats");
+    }, [navigate]);
   
     return (
       <Container maxW="xl" centerContent>
@@ -32,8 +34,8 @@ import {
           borderRadius="lg"
           borderWidth="1px"
         >
-          <Text fontSize="4xl" fontFamily="Work sans">
-            Talk-A-Tive
+          <Text fontSize="4xl" fontFamily="Work sans" textAlign='center'>
+            Chatting-WebApp
           </Text>
         </Box>
         <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
