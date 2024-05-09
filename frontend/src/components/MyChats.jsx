@@ -5,6 +5,7 @@ import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
+import GroupChatModal from "./miscellaneous/GroupChatModal";
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState("");
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
@@ -62,13 +63,15 @@ const MyChats = ({ fetchAgain }) => {
         alignItems="center"
       >
         Messages
-        <Button
-          display="flex"
-          fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-          rightIcon={<AddIcon />}
-        >
-          New Group Chat
-        </Button>
+        <GroupChatModal>
+          <Button
+            display="flex"
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+            rightIcon={<AddIcon />}
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </Box>
       <Box
         d="flex"
@@ -86,7 +89,7 @@ const MyChats = ({ fetchAgain }) => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                bg={selectedChat === chat ? "#153448" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
                 px={3}
                 py={2}
