@@ -50,7 +50,6 @@ const SideDrawer = () => {
 
     try{
       setLoading(true);
-      console.log(user.token);
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -87,10 +86,9 @@ const SideDrawer = () => {
       const {data} = await axios.post('http://localhost:5000/api/chats', {userId}, config);
 
       if(!chats.find((c)=>c._id === data._id)) setChats([data, ...chats]);
-      console.log(data);
+      
       setSelectedChat(data);
       setLoadingChat(false);
-      console.log(chats)
       onClose();
     }catch(err){
 
