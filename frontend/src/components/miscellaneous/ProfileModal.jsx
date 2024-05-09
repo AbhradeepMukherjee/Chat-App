@@ -33,9 +33,19 @@ const ProfileModal = ({ user, children }) => {
       <Modal size="lg" isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent h="410px">
-          <ModalHeader>{user.name}</ModalHeader>
+          <ModalHeader
+            fontSize="40px"
+            fontFamily="Work sans"
+            display="flex"
+            justifyContent="center"
+          >{user.name}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody
+            display="flex"
+            flexDir="column"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Image
               borderRadius="full"
               boxSize="150px"

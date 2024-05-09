@@ -23,7 +23,6 @@ const MyChats = ({ fetchAgain }) => {
         config
       );
       setChats(data);
-      console.log(chats);
     } catch (err) {
       toast({
         title: "Error occured",
