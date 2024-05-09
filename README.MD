@@ -4,7 +4,7 @@ ChattingWebApp boasts a dynamic frontend powered by React, offering users a mode
 
 ## Tech Stack:
 
-Client: React JS
+Client: React JS, Chakra UI
 
 Server: Node JS, Express JS
 
