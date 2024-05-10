@@ -4,7 +4,7 @@ import { Avatar, Tooltip } from "@chakra-ui/react";
 import { ChatState } from "../context/ChatProvider";
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
-  console.log(messages);
+  
   const messageEndRef = useRef(null); 
   useEffect(()=>{
     messageEndRef.current?.scrollIntoView();
@@ -13,11 +13,6 @@ const ScrollableChat = ({ messages }) => {
     <>
       {messages &&
         messages.map((m, i) => {
-          console.log(
-            isSameSender(messages, m, i, user._id),
-            " ",
-            isLastMessage(messages, i, user._id)
-          );
           return (
             <div style={{ display: "flex" }} key={m._id}>
               {(isSameSender(messages, m, i, user._id) ||
