@@ -26,74 +26,87 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ChatLoading from "../ChatLoading";
 import UserListItem from "../userAvatar/UserListItem";
+import { getSender } from "../../config/ChatLogics";
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState("");
 
-  const { user, setSelectedChat, chats, setChats } = ChatState();
-  const {onClose, isOpen, onOpen} = useDisclosure();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
+  const { onClose, isOpen, onOpen } = useDisclosure();
   const navigate = useNavigate();
   const toast = useToast();
   const handleSearch = async () => {
-    if(!search){
+    if (!search) {
       toast({
         title: "Please enter something",
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "top-left"
-      })
+        position: "top-left",
+      });
       return;
     }
 
-    try{
+    try {
       setLoading(true);
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
-        }, 
+        },
       };
 
-      const {data} = await axios.get(`http://localhost:5000/api/user?search=${search}`, config);
- 
+      const { data } = await axios.get(
+        `http://localhost:5000/api/user?search=${search}`,
+        config
+      );
+
       setLoading(false);
       setSearchResults(data);
-    }catch(err){
+    } catch (err) {
       toast({
         title: "Error fetching the chats",
         description: error.message,
         status: "error",
         duration: 5000,
         isClosable: true,
-        position: "bottom-left"
+        position: "bottom-left",
       });
       return;
     }
-  }
+  };
 
   const accessChat = async (userId) => {
-    try{
+    try {
       setLoadingChat(true);
       const config = {
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${user.token}`,
-        }
-      }
+        },
+      };
 
-      const {data} = await axios.post('http://localhost:5000/api/chats', {userId}, config);
+      const { data } = await axios.post(
+        "http://localhost:5000/api/chats",
+        { userId },
+        config
+      );
 
-      if(!chats.find((c)=>c._id === data._id)) setChats([data, ...chats]);
-      
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
-    }catch(err){
-
-    }
-  }
+    } catch (err) {}
+  };
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -125,9 +138,42 @@ const SideDrawer = () => {
 
         <div>
           <Menu>
-            <MenuButton p={1}>
+            <MenuButton p={1} style={{position: "relative"}}>
+              <span
+                style={{
+                  position: "absolute",
+                  top: "0",
+                  right: "0",
+                  backgroundColor: "red",
+                  color: "white",
+                  borderRadius: "50%",
+                  paddingTop: "0px",
+                  paddingRight: "5px",
+                  paddingBottom: "0.5px",
+                  paddingLeft: "5px",
+                }}
+                className="badge"
+              >
+                {notification.length > 0 ? notification.length : "" }
+              </span>
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
+            <MenuList pl={2}>
+              {!notification.length && "no new messages"}
+              {notification.map((n) => (
+                <MenuItem
+                  key={n._id}
+                  onClick={() => {
+                    setSelectedChat(n.chat);
+                    setNotification(notification.filter((n1) => n !== n1));
+                  }}
+                >
+                  {n.chat.isGroupChat
+                    ? `New Message in ${note.chat.chatName}`
+                    : `New Message from ${getSender(user, n.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
@@ -148,27 +194,29 @@ const SideDrawer = () => {
         </div>
       </Box>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay/>
+        <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth='1px'>Search Users</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
           <DrawerBody>
-            <Box display='flex' paddingBottom={2}>
+            <Box display="flex" paddingBottom={2}>
               <Input
                 placeholder="Search by name or email"
-                mr = {2}
-                value = {search}
-                onChange = {(e)=>setSearch(e.target.value)}
+                mr={2}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
               <Button onClick={handleSearch}>Go</Button>
             </Box>
-            {loading? (<ChatLoading/>): (
-              searchResults?.map((user)=>
+            {loading ? (
+              <ChatLoading />
+            ) : (
+              searchResults?.map((user) => (
                 <UserListItem
-                  key = {user._id}
-                  user = {user}
-                  handleFunction = {()=>accessChat(user._id)}
+                  key={user._id}
+                  user={user}
+                  handleFunction={() => accessChat(user._id)}
                 />
-              )
+              ))
             )}
             {loading && <Spinner ml="auto" display="flex" />}
           </DrawerBody>

@@ -19,7 +19,7 @@ const ProfileModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   
   return (
-    <div>
+    <>
       {children ? (
         <span onClick={onOpen}>{children}</span>
       ) : (
@@ -31,7 +31,7 @@ const ProfileModal = ({ user, children }) => {
       )}
 
       <Modal size="lg" isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
+        <ModalOverlay/>
         <ModalContent h="410px">
           <ModalHeader
             fontSize="40px"
@@ -67,7 +67,7 @@ const ProfileModal = ({ user, children }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </div>
+    </>
   );
 };
 
