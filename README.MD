@@ -1,4 +1,4 @@
-# ChattingWebApp:
+# Chat-App:
 
 ChattingWebApp boasts a dynamic frontend powered by React, offering users a modern and interactive chatting experience. React's component-based architecture facilitates the creation of a responsive user interface, allowing for navigation and interaction within the application. Users can enjoy a smooth and intuitive interface for chatting, browsing, and accessing various features. Combined with the backend technologies like Socket.io for real-time communication and Node.js with Express.js for server-side operations, the React frontend completes the full-stack setup of ChattingWebApp, providing a comprehensive solution for users seeking efficient and secure chatting functionality.
 
